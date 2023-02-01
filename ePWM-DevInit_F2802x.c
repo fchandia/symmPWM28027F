@@ -1,6 +1,6 @@
 //============================================================================
 //============================================================================
-//
+// Based on TMS320C2000 Piccolo™ controlSTICK Examples Modified by Fernando Chandia Reyes for FULL-STEP Hybryd Motor Control. Jan 2013.
 // FILE:	AsymmetricPWM-DevInit_F2802x.c
 //
 // TITLE:	Device initialization for F2802x series
@@ -45,7 +45,7 @@ void DeviceInit(void)
 	EALLOW;
 	SysCtrlRegs.PCLKCR0.bit.ADCENCLK = 1; // Enable ADC peripheral clock
 	(*Device_cal)();					  // Auto-calibrate from TI OTP
-	SysCtrlRegs.PCLKCR0.bit.ADCENCLK = 0; // Return ADC clock to original state
+	SysCtrlRegs.PCLKCR0.bit.ADCENCLK = 1; // Return ADC clock to original state
 	EDIS;
 
 
@@ -83,8 +83,8 @@ void DeviceInit(void)
    EALLOW; // below registers are "protected", allow access.
 
 // LOW SPEED CLOCKS prescale register settings
-   SysCtrlRegs.LOSPCP.all = 0x0002;		// Sysclk / 4 (15 MHz)
-   SysCtrlRegs.XCLK.bit.XCLKOUTDIV=2;
+   SysCtrlRegs.LOSPCP.all = TB_DIV4;		// Sysclk / 4 (15 MHz)
+   SysCtrlRegs.XCLK.bit.XCLKOUTDIV=TB_DIV4;   //
       	
 // PERIPHERAL CLOCK ENABLES 
 //---------------------------------------------------

@@ -61,7 +61,7 @@ void MemCopy(Uint16 *SourceAddr, Uint16* SourceEndAddr, Uint16* DestAddr);
 
 // Used for running BackGround in flash and the ISR in RAM
 extern Uint16 RamfuncsLoadStart, RamfuncsLoadEnd, RamfuncsRunStart;
-Uint16 duty_cycle=18800;	// Set duty 50% initially
+Uint16 duty_cycle=18750;	// Set duty 50% initially
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // MAIN CODE - starts here
@@ -90,8 +90,7 @@ void main(void)
 
 //-------------------------------------------------------------
 
-#define period 37600							  // 37600 = 100Hz when PLL is set to 0xC (60MHz) and DIV4
-
+#define period 37500							  // 37500 = 100Hz when PLL is set to 0xC (60MHz) and DIV4
 
   // Time-base registers
 
@@ -114,7 +113,7 @@ void main(void)
 
     EPwm2Regs.TBCTL.bit.PHSEN = TB_ENABLE;    // Enable phase loading
     EPwm2Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_IN;
-    EPwm2Regs.TBPHS.half.TBPHS = 28200; //Desfase en PW2 respecto a PW1: 9400=90º -> rotacion Contra Reloj, 28200=270º desfase, rotación Horaria.
+    EPwm2Regs.TBPHS.half.TBPHS = 28125; //Desfase en PW2 respecto a PW1: 9375=90º -> rotacion Contra Reloj, 28125=270º desfase, rotación Horaria.
 
 
    	// Setup shadow register load on ZERO
@@ -166,7 +165,7 @@ void main(void)
   // No interrups needed in this example.
   // PWM pins can be observed with a scope.	
 
-/*
+
 for(;;)
 	{
  	 EPwm1Regs.CMPA.half.CMPA = duty_cycle;      // Add duty_cycle_A to watch window
@@ -174,6 +173,5 @@ for(;;)
      EPwm1Regs.CMPB = duty_cycle;               // Add duty_cycle_B to watch window
      EPwm2Regs.CMPB = duty_cycle;               // Add duty_cycle_B to watch window
 	}											  // and change its value to see the effect
-*/
 
 }
